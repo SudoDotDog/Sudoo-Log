@@ -9,7 +9,8 @@ import { COLORS, LOG_LEVEL } from './declare';
 const isTTY = (): boolean => {
 
     if (Boolean(process) && Boolean(process.stdout)) {
-        return process.stdout.isTTY;
+
+        return Boolean(process.stdout.isTTY);
     }
 
     return false;
@@ -64,14 +65,15 @@ const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
             ],
             COLORS.FRONT_GRAY,
         ];
-        default: return [
-            [
-                COLORS.BACK_BLACK,
-                COLORS.FRONT_WHITE,
-            ],
-            null,
-        ];
     }
+
+    return [
+        [
+            COLORS.BACK_BLACK,
+            COLORS.FRONT_WHITE,
+        ],
+        null,
+    ];
 };
 
 export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
@@ -89,5 +91,7 @@ export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
 
         return wrappedBack + str;
     }
+
+    return getQuote(mode) + str;
 };
 
