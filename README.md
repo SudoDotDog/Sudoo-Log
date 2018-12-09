@@ -1,2 +1,0 @@
-# Sudoo-Log
-:ledger: Logs
