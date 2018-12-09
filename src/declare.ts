@@ -4,7 +4,7 @@
  * @description Declare
  */
 
-export enum LOG_MODE {
+export enum LOG_LEVEL {
 
     CRITICAL = "CRITICAL",
     ERROR = "ERROR",

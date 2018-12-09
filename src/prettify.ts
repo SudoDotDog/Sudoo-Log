@@ -4,7 +4,7 @@
  * @description Prettify
  */
 
-import { COLORS, LOG_MODE } from './declare';
+import { COLORS, LOG_LEVEL } from './declare';
 
 const isTTY = (): boolean => {
 
@@ -18,46 +18,46 @@ const isTTY = (): boolean => {
 const wrapContent = (colors: COLORS[], content: string) =>
     `${colors.join('')}${content}${COLORS.RESET}`;
 
-const getQuote = (mode: LOG_MODE): string => {
+const getQuote = (mode: LOG_LEVEL): string => {
 
     switch (mode) {
 
-        case LOG_MODE.CRITICAL: return '[CRIT]';
-        case LOG_MODE.DEBUG: return '[DBUG]';
-        case LOG_MODE.ERROR: return '[ERRR]';
-        case LOG_MODE.INFO: return '[INFO]';
-        case LOG_MODE.WARNING: return '[WARN]';
-        case LOG_MODE.VERBOSE:
+        case LOG_LEVEL.CRITICAL: return '[CRIT]';
+        case LOG_LEVEL.DEBUG: return '[DBUG]';
+        case LOG_LEVEL.ERROR: return '[ERRR]';
+        case LOG_LEVEL.INFO: return '[INFO]';
+        case LOG_LEVEL.WARNING: return '[WARN]';
+        case LOG_LEVEL.VERBOSE:
         default: return '[VERB]';
     }
 };
 
-const getPrettyColor = (mode: LOG_MODE): [COLORS[], COLORS | null] => {
+const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
 
     switch (mode) {
 
-        case LOG_MODE.CRITICAL: return [
+        case LOG_LEVEL.CRITICAL: return [
             [
                 COLORS.BACK_RED,
                 COLORS.FRONT_WHITE,
             ],
             COLORS.FRONT_RED,
         ];
-        case LOG_MODE.ERROR: return [
+        case LOG_LEVEL.ERROR: return [
             [
                 COLORS.BACK_MAGENTA,
                 COLORS.FRONT_WHITE,
             ],
             COLORS.FRONT_MAGENTA,
         ];
-        case LOG_MODE.WARNING: return [
+        case LOG_LEVEL.WARNING: return [
             [
                 COLORS.BACK_YELLOW,
                 COLORS.FRONT_WHITE,
             ],
             COLORS.FRONT_YELLOW,
         ];
-        case LOG_MODE.VERBOSE: return [
+        case LOG_LEVEL.VERBOSE: return [
             [
                 COLORS.BACK_BLACK,
                 COLORS.FRONT_WHITE,
@@ -74,7 +74,7 @@ const getPrettyColor = (mode: LOG_MODE): [COLORS[], COLORS | null] => {
     }
 };
 
-export const prettifyString = (mode: LOG_MODE, str: string): string => {
+export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
 
     if (isTTY()) {
 
