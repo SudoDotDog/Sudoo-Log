@@ -5,6 +5,7 @@
  */
 
 import { COLORS, LOG_LEVEL } from './declare';
+import { appropriateDateStringWithTime } from './util';
 
 const isTTY = (): boolean => {
 
@@ -76,6 +77,14 @@ const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
     ];
 };
 
+const mergeContent = (quote: string, str: string): string => {
+
+    const date: Date = new Date();
+    const prettifiedDate: string = appropriateDateStringWithTime(date);
+
+    return `${quote} ${prettifiedDate} ${str}`;
+};
+
 export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
 
     if (isTTY()) {
@@ -85,13 +94,12 @@ export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
         const wrappedBack = wrapContent(back, getQuote(mode));
 
         if (front) {
-
-            return wrappedBack + wrapContent([front], str);
+            return mergeContent(wrappedBack, wrapContent([front], str));
         }
 
-        return wrappedBack + str;
+        return mergeContent(wrappedBack, str);
     }
 
-    return getQuote(mode) + str;
+    return mergeContent(getQuote(mode), str);
 };
 
