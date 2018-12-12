@@ -21,9 +21,6 @@ build:
 	@echo "[INFO] Building for production"
 	@$(tsc) --p $(build)
 
-run: dev
-	@node docs/test.js
-
 tests:
 	@echo "[INFO] Testing with Mocha"
 ifeq ($(OS), Windows_NT)
