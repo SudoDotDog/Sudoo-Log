@@ -14,14 +14,11 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const minute: number = date.getMinutes();
     const seconds: number = date.getSeconds();
 
-    const area: number = date.getTimezoneOffset();
-    let areaStr: string;
+    const area: number = Math.floor(date.getTimezoneOffset() / 60);
 
-    if (area >= 0) {
-        areaStr = '+' + area.toString();
-    } else {
-        areaStr = area.toString();
-    }
+    const areaStr: string = area >= 0
+        ? '+' + area.toString()
+        : area.toString();
 
     return `${year}-${month}-${day} ${hour}:${minute}:${seconds}(UTC${areaStr})`;
 };
