@@ -14,6 +14,17 @@ export class SudooLog {
         return new SudooLog(level);
     }
 
+    public static get global(): SudooLog {
+
+        if (!this._instance) {
+            this._instance = new SudooLog(LOG_LEVEL.ALL);
+        }
+
+        return this._instance;
+    }
+
+    private static _instance: SudooLog | undefined;
+
     private _level: LOG_LEVEL;
     private _count: number;
 
@@ -30,6 +41,12 @@ export class SudooLog {
     public get length(): number {
 
         return this._count;
+    }
+
+    public level(level: LOG_LEVEL): SudooLog {
+
+        this._level = level;
+        return this;
     }
 
     public func(func: (content: string) => void): SudooLog {
@@ -117,6 +134,12 @@ export class SudooLog {
         const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str);
 
         this._func(prettified);
+        return this;
+    }
+
+    public reset(): SudooLog {
+
+        this._count = 0;
         return this;
     }
 
