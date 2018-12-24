@@ -3,7 +3,9 @@
         "CRIT",
         "DBUG",
         "ERRR",
-        "Sudoo"
+        "Sudoo",
+        "ifeq",
+        "setx"
     ],
     "tslint.configFile": "typescript/tslint.json"
 }
