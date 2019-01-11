@@ -2,17 +2,39 @@
 # yarn lockfile v1
 
 
+"@sudoo/triforce@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sudoo/triforce/-/triforce-1.1.0.tgz#955011d7e4b87490babc2f7c3f4938a94e183eb1"
+  integrity sha512-U5qR0Nh39Ibrp1FRD/aGr1SVl9c2Fmd7vlAFWyhW0ur7KVNDrUScRG3YH244hwo4kyx6XvdeAM/g1bVE0y8iiw==
+  dependencies:
+    "@sudoo/tslint-config" "^1.1.0"
+    "@types/chai" "^4.1.7"
+    "@types/chance" "^1.0.1"
+    "@types/mocha" "^5.2.5"
+    chai "^4.2.0"
+    chance "^1.0.18"
+    mocha "^5.2.0"
+    ts-node "^7.0.1"
+    tslint "^5.12.0"
+    typescript "^3.2.2"
+
+"@sudoo/tslint-config@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sudoo/tslint-config/-/tslint-config-1.1.0.tgz#f8712fb5a5d26e531af911d25d4c5ce3618c9198"
+  integrity sha512-nYvQthhovGpRSNz8YKTDy64ICJjINlDCJ0umqXifwZUwNAv9TEIpM4K5zsoBmLowMgg0XCZ2cyUV0DBAjqg26Q==
+
 "@types/chai@^4.1.7":
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
 
+"@types/chance@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/chance/-/chance-1.0.1.tgz#c10703020369602c40dd9428cc6e1437027116df"
+  integrity sha512-jtV6Bv/j+xk4gcXeLlESwNc/m/I/dIZA0xrt29g0uKcjyPob8iisj/5z0ARE+Ldfx4MxjNFNECG0z++J7zJgqg==
+
 "@types/mocha@^5.2.5":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
-
-"@types/node@^10.12.18":
-  version "10.12.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -101,6 +123,11 @@ chalk@^2.3.0:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
+
+chance@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/chance/-/chance-1.0.18.tgz#79788fe6fca4c338bf404321c347eecc80f969ee"
+  integrity sha512-g9YLQVHVZS/3F+zIicfB58vjcxopvYQRp7xHzvyDFDhXH1aRZI/JhwSAO0X5qYiQluoGnaNAU6wByD2KTxJN1A==
 
 check-error@^1.0.2:
   version "1.0.2"

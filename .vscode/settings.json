@@ -5,7 +5,8 @@
         "ERRR",
         "Sudoo",
         "ifeq",
-        "setx"
+        "setx",
+        "triforce"
     ],
     "tslint.configFile": "typescript/tslint.json"
 }
