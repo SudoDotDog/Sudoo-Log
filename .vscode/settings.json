@@ -6,7 +6,8 @@
         "Sudoo",
         "ifeq",
         "setx",
-        "triforce"
+        "triforce",
+        "tshook"
     ],
     "tslint.configFile": "typescript/tslint.json"
 }

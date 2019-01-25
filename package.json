@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/log",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": ":ledger: Logs",
   "main": "dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/SudoDotDog/Sudoo-Log#readme",
   "devDependencies": {
-    "@sudoo/triforce": "^1.1.0",
+    "@sudoo/triforce": "^1.2.0",
     "@types/node": "^10.12.18"
   },
   "nyc": {

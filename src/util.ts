@@ -29,7 +29,7 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const area: number = Math.floor(date.getTimezoneOffset() / 60);
 
     const parsedYear: string = padZero(year, 4);
-    const parsedMonth: string = padZero(month, 2);
+    const parsedMonth: string = padZero(month, 2) + 1;
     const parsedDay: string = padZero(day, 2);
 
     const parsedHour: string = padZero(hour, 2);
