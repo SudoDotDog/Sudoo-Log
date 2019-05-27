@@ -38,7 +38,7 @@ export const appropriateDateStringWithTime = (date: Date) => {
 
     const areaStr: string = area >= 0
         ? '+' + area.toString()
-        : area.toString();
+        : '-' + area.toString();
 
     return `${parsedYear}-${parsedMonth}-${parsedDay} ${parsedHour}:${parsedMinutes}:${parsedSeconds} (UTC${areaStr})`;
 };
