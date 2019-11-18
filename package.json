@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/SudoDotDog/Sudoo-Log#readme",
   "devDependencies": {
-    "@sudoo/triforce": "^1.6.0"
+    "@sudoo/triforce": "^2.0.3"
   },
   "nyc": {
     "extension": [
