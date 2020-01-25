@@ -63,7 +63,9 @@ export class SudooLog {
             LOG_LEVEL.INFO,
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.CRITICAL, str);
 
@@ -78,7 +80,9 @@ export class SudooLog {
             LOG_LEVEL.INFO,
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.ERROR, str);
 
@@ -92,7 +96,9 @@ export class SudooLog {
             LOG_LEVEL.INFO,
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.WARNING, str);
 
@@ -105,7 +111,10 @@ export class SudooLog {
             LOG_LEVEL.INFO,
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.INFO, str);
 
@@ -117,7 +126,9 @@ export class SudooLog {
         if (!this._expect([
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.DEBUG, str);
 
@@ -129,7 +140,9 @@ export class SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.VERBOSE,
-        ])) return this;
+        ])) {
+            return this;
+        }
 
         const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str);
 
