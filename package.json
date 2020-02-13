@@ -41,5 +41,8 @@
       "./test/tshook.js"
     ],
     "sourceMap": true
+  },
+  "dependencies": {
+    "@sudoo/magic": "^1.4.3"
   }
 }

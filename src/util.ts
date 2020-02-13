@@ -4,6 +4,8 @@
  * @description Util
  */
 
+import { TIME_CHANGE } from "@sudoo/magic";
+
 const padZero = (value: number, digits: number): string => {
 
     const parsed: string = value.toString();
@@ -26,8 +28,9 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const minutes: number = date.getMinutes();
     const seconds: number = date.getSeconds();
 
-    const area: number = Math.floor(date.getTimezoneOffset() / 60);
+    const area: number = Math.floor(date.getTimezoneOffset() / TIME_CHANGE.MINUTE_TO_HOUR);
 
+    // tslint:disable-next-line: no-magic-numbers
     const parsedYear: string = padZero(year, 4);
     const parsedMonth: string = padZero(month, 2);
     const parsedDay: string = padZero(day, 2);
