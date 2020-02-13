@@ -4,7 +4,7 @@
  * @description Prettify
  */
 
-import { COLORS, LOG_LEVEL } from './declare';
+import { COLORS, LOG_LEVEL, PrettifyConfig } from './declare';
 import { appropriateDateStringWithTime } from './util';
 
 const isTTY = (): boolean => {
@@ -79,15 +79,20 @@ const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
     ];
 };
 
-const mergeContent = (quote: string, str: string): string => {
+const mergeContent = (quote: string, str: string, config: PrettifyConfig): string => {
 
-    const date: Date = new Date();
-    const prettifiedDate: string = appropriateDateStringWithTime(date);
+    if (config.showTime) {
 
-    return `${quote} ${prettifiedDate} ${str}`;
+        const date: Date = new Date();
+        const prettifiedDate: string = appropriateDateStringWithTime(date);
+
+        return `${quote} ${prettifiedDate} ${str}`;
+    }
+
+    return `${quote} ${str}`;
 };
 
-export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
+export const prettifyString = (mode: LOG_LEVEL, str: string, config: PrettifyConfig): string => {
 
     if (isTTY()) {
 
@@ -96,11 +101,11 @@ export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
         const wrappedBack = wrapContent(back, getQuote(mode));
 
         if (front) {
-            return mergeContent(wrappedBack, wrapContent([front], str));
+            return mergeContent(wrappedBack, wrapContent([front], str), config);
         }
 
-        return mergeContent(wrappedBack, str);
+        return mergeContent(wrappedBack, str, config);
     }
 
-    return mergeContent(getQuote(mode), str);
+    return mergeContent(getQuote(mode), str, config);
 };

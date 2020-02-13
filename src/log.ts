@@ -4,7 +4,7 @@
  * @description Log
  */
 
-import { LOG_LEVEL } from "./declare";
+import { LOG_LEVEL, PrettifyConfig } from "./declare";
 import { prettifyString } from './prettify';
 
 export class SudooLog {
@@ -28,6 +28,8 @@ export class SudooLog {
     private _level: LOG_LEVEL;
     private _count: number;
 
+    private _showTime: boolean;
+
     private _func: (...contents: string[]) => void;
 
     private constructor(level: LOG_LEVEL) {
@@ -35,12 +37,22 @@ export class SudooLog {
         this._level = level;
         this._count = 0;
 
+        this._showTime = false;
+
         this._func = this._buildFunc(console.log);
     }
 
     public get length(): number {
-
         return this._count;
+    }
+
+    public showTime(): this {
+        this._showTime = true;
+        return this;
+    }
+    public hideTime(): this {
+        this._showTime = false;
+        return this;
     }
 
     public level(level: LOG_LEVEL): SudooLog {
@@ -67,7 +79,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.CRITICAL, str);
+        const prettified: string = prettifyString(LOG_LEVEL.CRITICAL, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -84,7 +96,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.ERROR, str);
+        const prettified: string = prettifyString(LOG_LEVEL.ERROR, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -100,7 +112,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.WARNING, str);
+        const prettified: string = prettifyString(LOG_LEVEL.WARNING, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -116,7 +128,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.INFO, str);
+        const prettified: string = prettifyString(LOG_LEVEL.INFO, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -130,7 +142,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.DEBUG, str);
+        const prettified: string = prettifyString(LOG_LEVEL.DEBUG, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -144,7 +156,7 @@ export class SudooLog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str);
+        const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str, this._getConfig());
 
         this._func(prettified);
         return this;
@@ -167,5 +179,12 @@ export class SudooLog {
     private _expect(modes: LOG_LEVEL[]): boolean {
 
         return this._level === LOG_LEVEL.ALL || modes.includes(this._level);
+    }
+
+    private _getConfig(): PrettifyConfig {
+
+        return {
+            showTime: this._showTime,
+        };
     }
 }

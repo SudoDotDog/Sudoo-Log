@@ -4,6 +4,11 @@
  * @description Declare
  */
 
+export type PrettifyConfig = {
+
+    readonly showTime: boolean;
+};
+
 export enum LOG_LEVEL {
 
     CRITICAL = "CRITICAL",
