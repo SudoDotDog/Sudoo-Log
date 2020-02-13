@@ -61,7 +61,9 @@ describe('Given {SudooLog} Class', (): void => {
             .warning('test')
             .debug('test');
 
+        // tslint:disable-next-line: no-magic-numbers
         expect(agent).to.be.lengthOf(4);
+        // tslint:disable-next-line: no-magic-numbers
         expect(temps.logs).to.be.lengthOf(4);
     });
 

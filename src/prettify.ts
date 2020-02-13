@@ -17,8 +17,10 @@ const isTTY = (): boolean => {
     return false;
 };
 
-const wrapContent = (colors: COLORS[], content: string) =>
-    `${colors.join('')}${content}${COLORS.RESET}`;
+const wrapContent = (colors: COLORS[], content: string) => {
+
+    return `${colors.join('')}${content}${COLORS.RESET}`;
+};
 
 const getQuote = (mode: LOG_LEVEL): string => {
 
@@ -102,4 +104,3 @@ export const prettifyString = (mode: LOG_LEVEL, str: string): string => {
 
     return mergeContent(getQuote(mode), str);
 };
-
