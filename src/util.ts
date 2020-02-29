@@ -25,8 +25,8 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const day: number = date.getDate();
 
     const hour: number = date.getHours();
-    const minutes: number = date.getMinutes();
-    const seconds: number = date.getSeconds();
+    const minute: number = date.getMinutes();
+    const second: number = date.getSeconds();
 
     const area: number = Math.floor(date.getTimezoneOffset() / TIME_CHANGE.MINUTE_TO_HOUR);
 
@@ -36,12 +36,12 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const parsedDay: string = padZero(day, 2);
 
     const parsedHour: string = padZero(hour, 2);
-    const parsedMinutes: string = padZero(minutes, 2);
-    const parsedSeconds: string = padZero(seconds, 2);
+    const parsedMinute: string = padZero(minute, 2);
+    const parsedSecond: string = padZero(second, 2);
 
     const areaStr: string = area >= 0
         ? '+' + area.toString()
         : '-' + area.toString();
 
-    return `${parsedYear}-${parsedMonth}-${parsedDay} ${parsedHour}:${parsedMinutes}:${parsedSeconds} (UTC${areaStr})`;
+    return `${parsedYear}-${parsedMonth}-${parsedDay} ${parsedHour}:${parsedMinute}:${parsedSecond} (UTC${areaStr})`;
 };
