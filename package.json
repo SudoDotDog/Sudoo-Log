@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/log",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": ":ledger: Logs",
   "main": "dist/index.js",
   "scripts": {
