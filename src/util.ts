@@ -29,6 +29,7 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const second: number = date.getSeconds();
 
     const area: number = Math.floor(date.getTimezoneOffset() / TIME_CHANGE.MINUTE_TO_HOUR);
+    const isPositive: boolean = area >= 0;
 
     const parsedYear: string = padZero(year, 4);
     const parsedMonth: string = padZero(month, 2);
@@ -38,9 +39,11 @@ export const appropriateDateStringWithTime = (date: Date) => {
     const parsedMinute: string = padZero(minute, 2);
     const parsedSecond: string = padZero(second, 2);
 
-    const areaStr: string = area >= 0
-        ? '+' + area.toString()
-        : '-' + area.toString();
+    const parsedArea: string = Math.abs(area).toString();
+
+    const areaStr: string = isPositive
+        ? '+' + parsedArea
+        : '-' + parsedArea;
 
     return `${parsedYear}-${parsedMonth}-${parsedDay} ${parsedHour}:${parsedMinute}:${parsedSecond} (UTC${areaStr})`;
 };
