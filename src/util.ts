@@ -30,7 +30,6 @@ export const appropriateDateStringWithTime = (date: Date) => {
 
     const area: number = Math.floor(date.getTimezoneOffset() / TIME_CHANGE.MINUTE_TO_HOUR);
 
-    // tslint:disable-next-line: no-magic-numbers
     const parsedYear: string = padZero(year, 4);
     const parsedMonth: string = padZero(month, 2);
     const parsedDay: string = padZero(day, 2);
