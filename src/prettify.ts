@@ -31,9 +31,10 @@ const getQuote = (mode: LOG_LEVEL): string => {
         case LOG_LEVEL.WARNING: return '[WARN]';
         case LOG_LEVEL.INFO: return '[INFO]';
         case LOG_LEVEL.DEBUG: return '[DBUG]';
-        case LOG_LEVEL.VERBOSE:
-        default: return '[VERB]';
+        case LOG_LEVEL.VERBOSE: return '[VERB]';
     }
+
+    return '[UKWN]';
 };
 
 const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
