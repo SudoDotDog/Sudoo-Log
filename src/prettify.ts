@@ -27,10 +27,10 @@ const getQuote = (mode: LOG_LEVEL): string => {
     switch (mode) {
 
         case LOG_LEVEL.CRITICAL: return '[CRIT]';
-        case LOG_LEVEL.DEBUG: return '[DBUG]';
         case LOG_LEVEL.ERROR: return '[ERRR]';
-        case LOG_LEVEL.INFO: return '[INFO]';
         case LOG_LEVEL.WARNING: return '[WARN]';
+        case LOG_LEVEL.INFO: return '[INFO]';
+        case LOG_LEVEL.DEBUG: return '[DBUG]';
         case LOG_LEVEL.VERBOSE:
         default: return '[VERB]';
     }
