@@ -20,9 +20,12 @@
     "url": "https://github.com/SudoDotDog/Sudoo-Log/issues"
   },
   "homepage": "https://github.com/SudoDotDog/Sudoo-Log#readme",
+  "dependencies": {
+    "@sudoo/magic": "^1.5.0"
+  },
   "devDependencies": {
-    "@sudoo/io": "^1.6.2",
-    "@sudoo/triforce": "^2.1.0"
+    "@sudoo/io": "^1.7.0",
+    "@sudoo/triforce": "^2.2.1"
   },
   "nyc": {
     "extension": [
@@ -41,8 +44,5 @@
       "./test/tshook.js"
     ],
     "sourceMap": true
-  },
-  "dependencies": {
-    "@sudoo/magic": "^1.4.3"
   }
 }
