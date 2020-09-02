@@ -6,3 +6,11 @@
 [![downloads](https://img.shields.io/npm/dm/@sudoo/log.svg)](https://www.npmjs.com/package/@sudoo/log)
 
 :ledger: Logs
+
+## Install
+
+```sh
+npm install @sudoo/log --save
+# Or
+yarn add @sudoo/log
+```
