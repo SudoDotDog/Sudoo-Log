@@ -18,7 +18,7 @@ const padZero = (value: number, digits: number): string => {
     return parsed;
 };
 
-export const appropriateDateStringWithTime = (date: Date) => {
+export const appropriateDateStringWithTime = (date: Date): string => {
 
     const year: number = date.getFullYear();
     const month: number = date.getMonth() + 1;

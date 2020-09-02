@@ -9,6 +9,8 @@ import { prettifyString } from './prettify';
 
 export class SudooLog {
 
+    private static _instance: SudooLog | undefined;
+
     public static create(level: LOG_LEVEL): SudooLog {
 
         return new SudooLog(level);
@@ -22,8 +24,6 @@ export class SudooLog {
 
         return this._instance;
     }
-
-    private static _instance: SudooLog | undefined;
 
     private _level: LOG_LEVEL;
     private _count: number;
