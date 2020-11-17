@@ -14,3 +14,17 @@ npm install @sudoo/log --save
 # Or
 yarn add @sudoo/log
 ```
+
+## Usage
+
+```ts
+import { LOG_LEVEL, SudooLog } from "@sudoo/log";
+
+const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL); // Change log level by environment
+agent.critical("critical");
+agent.error("error");
+agent.warning("warning");
+agent.info("info");
+agent.debug("debug");
+agent.verbose("verbose");
+```
