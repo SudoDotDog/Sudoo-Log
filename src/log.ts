@@ -5,7 +5,7 @@
  */
 
 import { ILog, LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
-import { prettifyString } from './prettify';
+import { prettifyLogContents } from './prettify';
 
 export class SudooLog implements ILog {
 
@@ -29,6 +29,7 @@ export class SudooLog implements ILog {
     private _count: number;
 
     private _showTime: boolean;
+    private _separator: string;
 
     private _logFunction: LogFunction;
 
@@ -38,8 +39,9 @@ export class SudooLog implements ILog {
         this._count = 0;
 
         this._showTime = false;
+        this._separator = ', ';
 
-        this._logFunction = this._buildFunc(console.log);
+        this._logFunction = this._buildLogFunction(console.log);
     }
 
     public get length(): number {
@@ -58,6 +60,12 @@ export class SudooLog implements ILog {
         return this;
     }
 
+    public setSeparator(separator: string): this {
+
+        this._separator = separator;
+        return this;
+    }
+
     public level(level: LOG_LEVEL): SudooLog {
 
         this._level = level;
@@ -66,11 +74,11 @@ export class SudooLog implements ILog {
 
     public setLogFunction(logFunction: LogFunction): SudooLog {
 
-        this._logFunction = this._buildFunc(logFunction);
+        this._logFunction = this._buildLogFunction(logFunction);
         return this;
     }
 
-    public critical(str: string): SudooLog {
+    public critical(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.CRITICAL,
@@ -83,13 +91,17 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.CRITICAL, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.CRITICAL,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public error(str: string): SudooLog {
+    public error(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.ERROR,
@@ -101,13 +113,17 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.ERROR, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.ERROR,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public warning(str: string): SudooLog {
+    public warning(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.WARNING,
@@ -118,13 +134,17 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.WARNING, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.WARNING,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public info(str: string): SudooLog {
+    public info(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.INFO,
@@ -135,13 +155,17 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.INFO, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.INFO,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public debug(str: string): SudooLog {
+    public debug(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.DEBUG,
@@ -150,13 +174,17 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.DEBUG, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.DEBUG,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public verbose(str: string): SudooLog {
+    public verbose(...contents: any[]): SudooLog {
 
         if (!this._expect([
             LOG_LEVEL.VERBOSE,
@@ -164,7 +192,11 @@ export class SudooLog implements ILog {
             return this;
         }
 
-        const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str, this._getConfig());
+        const prettified: string = prettifyLogContents(
+            LOG_LEVEL.VERBOSE,
+            contents,
+            this._getConfig(),
+        );
 
         this._logFunction(prettified);
         return this;
@@ -176,11 +208,11 @@ export class SudooLog implements ILog {
         return this;
     }
 
-    protected _buildFunc(func: LogFunction): LogFunction {
+    protected _buildLogFunction(logFunction: LogFunction): LogFunction {
 
         return (...contents: string[]): void => {
             this._count++;
-            func(...contents);
+            logFunction(...contents);
         };
     }
 
@@ -193,6 +225,7 @@ export class SudooLog implements ILog {
 
         return {
             showTime: this._showTime,
+            separator: this._separator,
         };
     }
 }

@@ -11,6 +11,7 @@ export type LogFunction = (...content: any[]) => void;
 export type PrettifyConfig = {
 
     readonly showTime: boolean;
+    readonly separator: string;
 };
 
 export enum LOG_LEVEL {
@@ -56,10 +57,10 @@ export enum COLORS {
 
 export interface ILog {
 
-    critical(...args: any[]): SudooLog;
-    error(...args: any[]): SudooLog;
-    warning(...args: any[]): SudooLog;
-    info(...args: any[]): SudooLog;
-    debug(...args: any[]): SudooLog;
-    verbose(...args: any[]): SudooLog;
+    critical(...contents: any[]): SudooLog;
+    error(...contents: any[]): SudooLog;
+    warning(...contents: any[]): SudooLog;
+    info(...contents: any[]): SudooLog;
+    debug(...contents: any[]): SudooLog;
+    verbose(...contents: any[]): SudooLog;
 }

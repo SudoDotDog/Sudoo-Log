@@ -93,8 +93,44 @@ const mergeContent = (quote: string, str: string, config: PrettifyConfig): strin
     return `${quote} ${str}`;
 };
 
-export const prettifyString = (mode: LOG_LEVEL, str: string, config: PrettifyConfig): string => {
+export const stringifyLogContents = (content: any): string => {
 
+    if (typeof content === 'string') {
+        return content;
+    }
+
+    if (typeof content === 'undefined') {
+        return '[undefined]';
+    }
+
+    if (content === null) {
+        return '[null]';
+    }
+
+    if (content.toString) {
+        return content.toString();
+    }
+
+    return String(content);
+};
+
+export const concatLogContents = (
+    contents: any[],
+    config: PrettifyConfig,
+): string => {
+
+    return contents
+        .map((content: any) => stringifyLogContents(content))
+        .join(config.separator);
+};
+
+export const prettifyLogContents = (
+    mode: LOG_LEVEL,
+    contents: any[],
+    config: PrettifyConfig,
+): string => {
+
+    const contentString: string = concatLogContents(contents, config);
     if (isTTY()) {
 
         const [back, front]: [COLORS[], COLORS | null] = getPrettyColor(mode);
@@ -102,11 +138,11 @@ export const prettifyString = (mode: LOG_LEVEL, str: string, config: PrettifyCon
         const wrappedBack = wrapContent(back, getQuote(mode));
 
         if (front) {
-            return mergeContent(wrappedBack, wrapContent([front], str), config);
+            return mergeContent(wrappedBack, wrapContent([front], contentString), config);
         }
 
-        return mergeContent(wrappedBack, str, config);
+        return mergeContent(wrappedBack, contentString, config);
     }
 
-    return mergeContent(getQuote(mode), str, config);
+    return mergeContent(getQuote(mode), contentString, config);
 };
