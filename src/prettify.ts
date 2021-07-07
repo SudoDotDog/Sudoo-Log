@@ -179,12 +179,12 @@ export const prettifyLogContents = (
 ): string => {
 
     const contentString: string = concatContents(contents, config);
+    const quote: string = getQuote(mode);
+    const quoteText: string = scopeQuote(quote, config);
+
     if (isTTY(config)) {
 
         const [back, front]: [COLORS[], COLORS | null] = getPrettyColor(mode);
-
-        const quote: string = getQuote(mode);
-        const quoteText: string = scopeQuote(quote, config);
         const wrappedBack: string = wrapContent(back, quoteText);
 
         if (front) {
@@ -194,5 +194,5 @@ export const prettifyLogContents = (
         return mergeContent(wrappedBack, contentString, config);
     }
 
-    return mergeContent(getQuote(mode), contentString, config);
+    return mergeContent(quoteText, contentString, config);
 };

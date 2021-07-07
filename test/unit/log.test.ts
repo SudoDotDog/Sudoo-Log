@@ -99,28 +99,59 @@ describe('Given {SudooLog} Class', (): void => {
         expect(temps.logs).to.be.lengthOf(1);
     });
 
-    it('should be able to log information', (): void => {
+    it('should be able to log information - tty', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
+        agent.setTTY(true);
         agent.setLogFunction(temps.func);
         agent.info('test');
 
         expect(agent).to.be.lengthOf(1);
         expect(temps.logs[0]).to.be.include('[INFO]');
+        expect(temps.logs[0]).to.be.not.equal('[INFO] test');
     });
 
-    it('should be able to log scoped information', (): void => {
+    it('should be able to log scoped information - tty', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
+        agent.setTTY(true);
         agent.setLogFunction(temps.func);
         agent.setScope('scope');
         agent.info('test');
 
         expect(agent).to.be.lengthOf(1);
         expect(temps.logs[0]).to.be.include('[SCOPE/INFO]');
+        expect(temps.logs[0]).to.be.not.equal('[SCOPE/INFO] test');
+    });
+
+    it('should be able to log information - not tty', (): void => {
+
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+
+        agent.setTTY(false);
+        agent.setLogFunction(temps.func);
+        agent.info('test');
+
+        expect(agent).to.be.lengthOf(1);
+        expect(temps.logs[0]).to.be.equal('[INFO] test');
+    });
+
+    it('should be able to log scoped information - not tty', (): void => {
+
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+
+        agent.setTTY(false);
+        agent.setLogFunction(temps.func);
+        agent.setScope('scope');
+        agent.info('test');
+
+        expect(agent).to.be.lengthOf(1);
+        expect(temps.logs[0]).to.be.equal('[SCOPE/INFO] test');
     });
 });
