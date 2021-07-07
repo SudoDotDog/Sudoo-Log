@@ -4,10 +4,10 @@
  * @description Log
  */
 
-import { ILog, LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
+import { LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
 import { prettifyLogContents } from './prettify';
 
-export class SudooLog implements ILog {
+export class SudooLog {
 
     private static _instance: SudooLog | undefined;
 
@@ -30,7 +30,6 @@ export class SudooLog implements ILog {
 
     private _showTime: boolean;
     private _separator: string;
-    private _scope: string;
     private _capitalizeScope: boolean;
 
     private _logFunction: LogFunction;
@@ -42,7 +41,6 @@ export class SudooLog implements ILog {
 
         this._showTime = false;
         this._separator = ', ';
-        this._scope = '';
         this._capitalizeScope = true;
 
         this._logFunction = this._buildLogFunction(console.log);
@@ -50,6 +48,9 @@ export class SudooLog implements ILog {
 
     public get length(): number {
         return this._count;
+    }
+    public get level(): LOG_LEVEL {
+        return this._level;
     }
 
     public showTime(): this {
@@ -70,19 +71,55 @@ export class SudooLog implements ILog {
         return this;
     }
 
-    public level(level: LOG_LEVEL): SudooLog {
+    public setCapitalizeScope(capitalizeScope: boolean): this {
+
+        this._capitalizeScope = capitalizeScope;
+        return this;
+    }
+
+    public setLevel(level: LOG_LEVEL): this {
 
         this._level = level;
         return this;
     }
 
-    public setLogFunction(logFunction: LogFunction): SudooLog {
+    public setLogFunction(logFunction: LogFunction): this {
 
         this._logFunction = this._buildLogFunction(logFunction);
         return this;
     }
 
-    public critical(...contents: any[]): SudooLog {
+    public critical(...contents: any[]): this {
+
+        return this.scopedCritical('', ...contents);
+    }
+
+    public error(...contents: any[]): this {
+
+        return this.scopedError('', ...contents);
+    }
+
+    public warning(...contents: any[]): this {
+
+        return this.scopedWarning('', ...contents);
+    }
+
+    public info(...contents: any[]): this {
+
+        return this.scopedInfo('', ...contents);
+    }
+
+    public debug(...contents: any[]): this {
+
+        return this.scopedDebug('', ...contents);
+    }
+
+    public verbose(...contents: any[]): this {
+
+        return this.scopedVerbose('', ...contents);
+    }
+
+    public scopedCritical(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.CRITICAL,
@@ -98,14 +135,14 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.CRITICAL,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public error(...contents: any[]): SudooLog {
+    public scopedError(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.ERROR,
@@ -120,14 +157,14 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.ERROR,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public warning(...contents: any[]): SudooLog {
+    public scopedWarning(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.WARNING,
@@ -141,14 +178,14 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.WARNING,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public info(...contents: any[]): SudooLog {
+    public scopedInfo(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.INFO,
@@ -162,14 +199,14 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.INFO,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public debug(...contents: any[]): SudooLog {
+    public scopedDebug(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.DEBUG,
@@ -181,14 +218,14 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.DEBUG,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public verbose(...contents: any[]): SudooLog {
+    public scopedVerbose(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.VERBOSE,
@@ -199,22 +236,34 @@ export class SudooLog implements ILog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.VERBOSE,
             contents,
-            this._getConfig(),
+            this._getConfig(scope),
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public reset(): SudooLog {
+    public reset(): this {
 
         this._count = 0;
         return this;
     }
 
+    public clone(): SudooLog {
+
+        const instance: SudooLog = new SudooLog(this._level);
+
+        instance._showTime = this._showTime;
+        instance._separator = this._separator;
+        instance._capitalizeScope = this._capitalizeScope;
+
+        return instance;
+    }
+
     protected _buildLogFunction(logFunction: LogFunction): LogFunction {
 
         return (...contents: string[]): void => {
+
             this._count++;
             logFunction(...contents);
         };
@@ -225,14 +274,14 @@ export class SudooLog implements ILog {
         return this._level === LOG_LEVEL.ALL || modes.includes(this._level);
     }
 
-    private _getConfig(): PrettifyConfig {
+    private _getConfig(scope: string): PrettifyConfig {
 
         return {
 
             showTime: this._showTime,
             separator: this._separator,
-            scope: this._scope,
             capitalizeScope: this._capitalizeScope,
+            scope,
         };
     }
 }

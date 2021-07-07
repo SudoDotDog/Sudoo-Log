@@ -4,16 +4,15 @@
  * @description Declare
  */
 
-import { SudooLog } from "./log";
-
 export type LogFunction = (...content: any[]) => void;
 
 export type PrettifyConfig = {
 
     readonly showTime: boolean;
     readonly separator: string;
-    readonly scope: string;
     readonly capitalizeScope: boolean;
+
+    readonly scope: string;
 };
 
 export enum LOG_LEVEL {
@@ -55,14 +54,4 @@ export enum COLORS {
     BACK_MAGENTA = "\x1b[45m",
     BACK_CYAN = "\x1b[46m",
     BACK_WHITE = "\x1b[47m",
-}
-
-export interface ILog {
-
-    critical(...contents: any[]): SudooLog;
-    error(...contents: any[]): SudooLog;
-    warning(...contents: any[]): SudooLog;
-    info(...contents: any[]): SudooLog;
-    debug(...contents: any[]): SudooLog;
-    verbose(...contents: any[]): SudooLog;
 }
