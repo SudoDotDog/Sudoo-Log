@@ -7,7 +7,11 @@
 import { COLORS, LOG_LEVEL, PrettifyConfig } from './declare';
 import { appropriateDateStringWithTime } from './util';
 
-const isTTY = (): boolean => {
+const isTTY = (config: PrettifyConfig): boolean => {
+
+    if (typeof config.tty === 'boolean') {
+        return config.tty;
+    }
 
     if (Boolean(process) && Boolean(process.stdout)) {
 
@@ -44,10 +48,10 @@ const scopeQuote = (quote: string, config: PrettifyConfig): string => {
     }
 
     if (config.capitalizeScope) {
-        return `[${quote}/${config.scope.toUpperCase()}]`;
+        return `[${config.scope.toUpperCase()}/${quote}]`;
     }
 
-    return `[${quote}/${config.scope}]`;
+    return `[${config.scope}/${quote}]`;
 };
 
 const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
@@ -175,7 +179,7 @@ export const prettifyLogContents = (
 ): string => {
 
     const contentString: string = concatContents(contents, config);
-    if (isTTY()) {
+    if (isTTY(config)) {
 
         const [back, front]: [COLORS[], COLORS | null] = getPrettyColor(mode);
 

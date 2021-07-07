@@ -13,6 +13,8 @@ export type PrettifyConfig = {
     readonly capitalizeScope: boolean;
 
     readonly scope: string;
+
+    readonly tty?: boolean;
 };
 
 export enum LOG_LEVEL {

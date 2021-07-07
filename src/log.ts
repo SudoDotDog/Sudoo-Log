@@ -32,6 +32,10 @@ export class SudooLog {
     private _separator: string;
     private _capitalizeScope: boolean;
 
+    private _tty?: boolean;
+
+    private _scope: string;
+
     private _logFunction: LogFunction;
 
     private constructor(level: LOG_LEVEL) {
@@ -43,6 +47,8 @@ export class SudooLog {
         this._separator = ', ';
         this._capitalizeScope = true;
 
+        this._scope = '';
+
         this._logFunction = this._buildLogFunction(console.log);
     }
 
@@ -51,6 +57,9 @@ export class SudooLog {
     }
     public get level(): LOG_LEVEL {
         return this._level;
+    }
+    public get scope(): string {
+        return this._scope;
     }
 
     public showTime(): this {
@@ -77,6 +86,18 @@ export class SudooLog {
         return this;
     }
 
+    public setTTY(tty: boolean): this {
+
+        this._tty = tty;
+        return this;
+    }
+
+    public setScope(scope: string): this {
+
+        this._scope = scope;
+        return this;
+    }
+
     public setLevel(level: LOG_LEVEL): this {
 
         this._level = level;
@@ -91,32 +112,32 @@ export class SudooLog {
 
     public critical(...contents: any[]): this {
 
-        return this.scopedCritical('', ...contents);
+        return this.scopedCritical(this._scope, ...contents);
     }
 
     public error(...contents: any[]): this {
 
-        return this.scopedError('', ...contents);
+        return this.scopedError(this._scope, ...contents);
     }
 
     public warning(...contents: any[]): this {
 
-        return this.scopedWarning('', ...contents);
+        return this.scopedWarning(this._scope, ...contents);
     }
 
     public info(...contents: any[]): this {
 
-        return this.scopedInfo('', ...contents);
+        return this.scopedInfo(this._scope, ...contents);
     }
 
     public debug(...contents: any[]): this {
 
-        return this.scopedDebug('', ...contents);
+        return this.scopedDebug(this._scope, ...contents);
     }
 
     public verbose(...contents: any[]): this {
 
-        return this.scopedVerbose('', ...contents);
+        return this.scopedVerbose(this._scope, ...contents);
     }
 
     public scopedCritical(scope: string, ...contents: any[]): this {
@@ -257,6 +278,16 @@ export class SudooLog {
         instance._separator = this._separator;
         instance._capitalizeScope = this._capitalizeScope;
 
+        instance._scope = this._scope;
+
+        return instance;
+    }
+
+    public fork(scope: string): SudooLog {
+
+        const instance: SudooLog = this.clone();
+        instance._scope = scope;
+
         return instance;
     }
 
@@ -281,6 +312,7 @@ export class SudooLog {
             showTime: this._showTime,
             separator: this._separator,
             capitalizeScope: this._capitalizeScope,
+            tty: this._tty,
             scope,
         };
     }

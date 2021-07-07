@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Log
- * @description Index
+ * @description Log
  * @package Unit Test
  */
 
@@ -97,5 +97,30 @@ describe('Given {SudooLog} Class', (): void => {
             .warning('test');
         expect(agent).to.be.lengthOf(1);
         expect(temps.logs).to.be.lengthOf(1);
+    });
+
+    it('should be able to log information', (): void => {
+
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+
+        agent.setLogFunction(temps.func);
+        agent.info('test');
+
+        expect(agent).to.be.lengthOf(1);
+        expect(temps.logs[0]).to.be.include('[INFO]');
+    });
+
+    it('should be able to log scoped information', (): void => {
+
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+
+        agent.setLogFunction(temps.func);
+        agent.setScope('scope');
+        agent.info('test');
+
+        expect(agent).to.be.lengthOf(1);
+        expect(temps.logs[0]).to.be.include('[SCOPE/INFO]');
     });
 });
