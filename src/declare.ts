@@ -12,6 +12,8 @@ export type PrettifyConfig = {
 
     readonly showTime: boolean;
     readonly separator: string;
+    readonly scope: string;
+    readonly capitalizeScope: boolean;
 };
 
 export enum LOG_LEVEL {

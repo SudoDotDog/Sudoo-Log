@@ -26,15 +26,28 @@ const getQuote = (mode: LOG_LEVEL): string => {
 
     switch (mode) {
 
-        case LOG_LEVEL.CRITICAL: return '[CRIT]';
-        case LOG_LEVEL.ERROR: return '[ERRR]';
-        case LOG_LEVEL.WARNING: return '[WARN]';
-        case LOG_LEVEL.INFO: return '[INFO]';
-        case LOG_LEVEL.DEBUG: return '[DBUG]';
-        case LOG_LEVEL.VERBOSE: return '[VERB]';
+        case LOG_LEVEL.CRITICAL: return 'CRITICAL';
+        case LOG_LEVEL.ERROR: return 'ERROR';
+        case LOG_LEVEL.WARNING: return 'WARNING';
+        case LOG_LEVEL.INFO: return 'INFO';
+        case LOG_LEVEL.DEBUG: return 'DEBUG';
+        case LOG_LEVEL.VERBOSE: return 'VERBOSE';
     }
 
-    return '[UKWN]';
+    return 'UNKNOWN';
+};
+
+const scopeQuote = (quote: string, config: PrettifyConfig): string => {
+
+    if (config.scope === '') {
+        return `[${quote}]`;
+    }
+
+    if (config.capitalizeScope) {
+        return `[${quote}/${config.scope.toUpperCase()}]`;
+    }
+
+    return `[${quote}/${config.scope}]`;
 };
 
 const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
@@ -93,34 +106,65 @@ const mergeContent = (quote: string, str: string, config: PrettifyConfig): strin
     return `${quote} ${str}`;
 };
 
-export const stringifyLogContents = (content: any): string => {
+const stringifyContents = (content: any): string => {
+
+    if (typeof content === 'undefined') {
+        return '(undefined)';
+    }
+
+    if (content === null) {
+        return '(null)';
+    }
 
     if (typeof content === 'string') {
         return content;
     }
 
-    if (typeof content === 'undefined') {
-        return '[undefined]';
+    if (typeof content === 'number') {
+        return content.toString();
     }
 
-    if (content === null) {
-        return '[null]';
+    if (typeof content === 'bigint') {
+        return `${content.toString()}n`;
     }
 
-    if (content.toString) {
+    if (Array.isArray(content)) {
+
+        const joinedList: string = content
+            .map((element: any) => stringifyContents(element))
+            .join(', ');
+
+        return `[${joinedList}]`;
+    }
+
+    const dateAttempt: Date = new Date(content);
+    if (!isNaN(dateAttempt.getTime())) {
+        return dateAttempt.toISOString();
+    }
+
+    if (typeof content === 'object') {
+
+        const joinedObject: string = Object.entries(content)
+            .map((entry: [any, any]) => `${entry[0]}: ${stringifyContents(entry[1])}`)
+            .join(', ');
+
+        return `{${joinedObject}}`;
+    }
+
+    if (typeof content.toString === 'function') {
         return content.toString();
     }
 
     return String(content);
 };
 
-export const concatLogContents = (
+const concatContents = (
     contents: any[],
     config: PrettifyConfig,
 ): string => {
 
     return contents
-        .map((content: any) => stringifyLogContents(content))
+        .map((content: any) => stringifyContents(content))
         .join(config.separator);
 };
 
@@ -130,12 +174,14 @@ export const prettifyLogContents = (
     config: PrettifyConfig,
 ): string => {
 
-    const contentString: string = concatLogContents(contents, config);
+    const contentString: string = concatContents(contents, config);
     if (isTTY()) {
 
         const [back, front]: [COLORS[], COLORS | null] = getPrettyColor(mode);
 
-        const wrappedBack = wrapContent(back, getQuote(mode));
+        const quote: string = getQuote(mode);
+        const quoteText: string = scopeQuote(quote, config);
+        const wrappedBack: string = wrapContent(back, quoteText);
 
         if (front) {
             return mergeContent(wrappedBack, wrapContent([front], contentString), config);

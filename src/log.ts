@@ -30,6 +30,8 @@ export class SudooLog implements ILog {
 
     private _showTime: boolean;
     private _separator: string;
+    private _scope: string;
+    private _capitalizeScope: boolean;
 
     private _logFunction: LogFunction;
 
@@ -40,6 +42,8 @@ export class SudooLog implements ILog {
 
         this._showTime = false;
         this._separator = ', ';
+        this._scope = '';
+        this._capitalizeScope = true;
 
         this._logFunction = this._buildLogFunction(console.log);
     }
@@ -224,8 +228,11 @@ export class SudooLog implements ILog {
     private _getConfig(): PrettifyConfig {
 
         return {
+
             showTime: this._showTime,
             separator: this._separator,
+            scope: this._scope,
+            capitalizeScope: this._capitalizeScope,
         };
     }
 }
