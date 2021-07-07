@@ -2,18 +2,10 @@
   "name": "@sudoo/log",
   "version": "1.4.1",
   "description": ":ledger: Logs",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Sudoo-Log.git"
   },
-  "keywords": [
-    "Log",
-    "Sudoo"
-  ],
   "author": "WMXPY",
   "license": "MIT",
   "bugs": {
@@ -24,8 +16,9 @@
     "@sudoo/magic": "^1.8.0"
   },
   "devDependencies": {
-    "@sudoo/io": "^1.8.0",
-    "@sudoo/triforce": "^2.9.27"
+    "@sudoo/build-utils": "^1.0.0",
+    "@sudoo/license": "^1.1.0",
+    "@sudoo/triforce": "^2.9.28"
   },
   "nyc": {
     "extension": [

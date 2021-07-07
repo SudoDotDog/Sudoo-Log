@@ -7,7 +7,7 @@
 
 import { expect } from 'chai';
 import { LOG_LEVEL, SudooLog } from '../../src';
-import { createSimpleMockLogFunction } from '../mock/log';
+import { createSimpleMockLogFunction, SimpleMockLogFunction } from '../mock/log';
 
 describe('Given {SudooLog} Class', (): void => {
 
@@ -20,12 +20,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('change log function should use new function instead', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test');
         expect(agent).to.be.lengthOf(1);
         expect(temps.logs).to.be.lengthOf(1);
@@ -34,12 +31,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('in all mode, all logs should be printed', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test');
@@ -50,12 +44,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('in debug mode, debug should be printed', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.DEBUG);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -68,12 +59,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('in info mode, without debug should be printed', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.INFO);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -86,12 +74,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('in warning mode, only warning and error should be printed out', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.WARNING);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -104,12 +89,9 @@ describe('Given {SudooLog} Class', (): void => {
     it('in error mode, only error should be printed out', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ERROR);
-        const temps: {
-            func: (content: string) => void;
-            logs: string[];
-        } = createSimpleMockLogFunction();
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
 
-        agent.func(temps.func);
+        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test');

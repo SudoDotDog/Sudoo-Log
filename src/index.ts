@@ -4,6 +4,8 @@
  * @description Index
  */
 
-export { LOG_LEVEL } from "./declare";
+export * from "./declare";
 export * from "./log";
+export * from "./prettify";
+export * from "./util";
 

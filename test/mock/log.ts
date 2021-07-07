@@ -5,14 +5,19 @@
  * @package Unit Test
  */
 
-export const createSimpleMockLogFunction = (): {
+import { LogFunction } from "../../src";
 
-    func: (...content: string[]) => void;
+export type SimpleMockLogFunction = {
+
+    func: LogFunction;
     logs: string[];
-} => {
+};
+
+export const createSimpleMockLogFunction = (): SimpleMockLogFunction => {
 
     const logs: string[] = [];
     return {
+
         func: (...content: string[]): void => {
 
             logs.push(...content);
