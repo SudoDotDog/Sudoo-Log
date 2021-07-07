@@ -4,10 +4,10 @@
  * @description Log
  */
 
-import { LOG_LEVEL, PrettifyConfig } from "./declare";
+import { ILog, LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
 import { prettifyString } from './prettify';
 
-export class SudooLog {
+export class SudooLog implements ILog {
 
     private static _instance: SudooLog | undefined;
 
@@ -30,7 +30,7 @@ export class SudooLog {
 
     private _showTime: boolean;
 
-    private _func: (...contents: string[]) => void;
+    private _logFunction: LogFunction;
 
     private constructor(level: LOG_LEVEL) {
 
@@ -39,7 +39,7 @@ export class SudooLog {
 
         this._showTime = false;
 
-        this._func = this._buildFunc(console.log);
+        this._logFunction = this._buildFunc(console.log);
     }
 
     public get length(): number {
@@ -47,10 +47,13 @@ export class SudooLog {
     }
 
     public showTime(): this {
+
         this._showTime = true;
         return this;
     }
+
     public hideTime(): this {
+
         this._showTime = false;
         return this;
     }
@@ -61,13 +64,14 @@ export class SudooLog {
         return this;
     }
 
-    public func(func: (content: string) => void): SudooLog {
+    public setLogFunction(logFunction: LogFunction): SudooLog {
 
-        this._func = this._buildFunc(func);
+        this._logFunction = this._buildFunc(logFunction);
         return this;
     }
 
     public critical(str: string): SudooLog {
+
         if (!this._expect([
             LOG_LEVEL.CRITICAL,
             LOG_LEVEL.ERROR,
@@ -81,11 +85,12 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.CRITICAL, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
     public error(str: string): SudooLog {
+
         if (!this._expect([
             LOG_LEVEL.ERROR,
             LOG_LEVEL.WARNING,
@@ -98,11 +103,12 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.ERROR, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
     public warning(str: string): SudooLog {
+
         if (!this._expect([
             LOG_LEVEL.WARNING,
             LOG_LEVEL.INFO,
@@ -114,11 +120,12 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.WARNING, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
     public info(str: string): SudooLog {
+
         if (!this._expect([
             LOG_LEVEL.INFO,
             LOG_LEVEL.DEBUG,
@@ -130,11 +137,12 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.INFO, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
     public debug(str: string): SudooLog {
+
         if (!this._expect([
             LOG_LEVEL.DEBUG,
             LOG_LEVEL.VERBOSE,
@@ -144,7 +152,7 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.DEBUG, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
@@ -158,7 +166,7 @@ export class SudooLog {
 
         const prettified: string = prettifyString(LOG_LEVEL.VERBOSE, str, this._getConfig());
 
-        this._func(prettified);
+        this._logFunction(prettified);
         return this;
     }
 
@@ -168,7 +176,7 @@ export class SudooLog {
         return this;
     }
 
-    protected _buildFunc(func: (...content: string[]) => void): (...content: string[]) => void {
+    protected _buildFunc(func: LogFunction): LogFunction {
 
         return (...contents: string[]): void => {
             this._count++;

@@ -4,6 +4,10 @@
  * @description Declare
  */
 
+import { SudooLog } from "./log";
+
+export type LogFunction = (...content: any[]) => void;
+
 export type PrettifyConfig = {
 
     readonly showTime: boolean;
@@ -48,4 +52,14 @@ export enum COLORS {
     BACK_MAGENTA = "\x1b[45m",
     BACK_CYAN = "\x1b[46m",
     BACK_WHITE = "\x1b[47m",
+}
+
+export interface ILog {
+
+    critical(...args: any[]): SudooLog;
+    error(...args: any[]): SudooLog;
+    warning(...args: any[]): SudooLog;
+    info(...args: any[]): SudooLog;
+    debug(...args: any[]): SudooLog;
+    verbose(...args: any[]): SudooLog;
 }
