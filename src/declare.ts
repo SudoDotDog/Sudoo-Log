@@ -4,6 +4,7 @@
  * @description Declare
  */
 
+export type LevelDeterminer = LOG_LEVEL | (() => LOG_LEVEL);
 export type LogFunction = (...content: any[]) => void;
 
 export type PrettifyConfig = {

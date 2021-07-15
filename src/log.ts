@@ -4,14 +4,19 @@
  * @description Log
  */
 
-import { LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
+import { LevelDeterminer, LogFunction, LOG_LEVEL, PrettifyConfig } from "./declare";
+import { sudooDefaultLogFunction } from "./log-function";
 import { prettifyLogContents } from './prettify';
 
 export class SudooLog {
 
     private static _instance: SudooLog | undefined;
 
-    public static create(level: LOG_LEVEL): SudooLog {
+    public static create(level: LevelDeterminer): SudooLog {
+
+        if (typeof level === 'function') {
+            return new SudooLog(level());
+        }
 
         return new SudooLog(level);
     }
@@ -49,7 +54,9 @@ export class SudooLog {
 
         this._scope = '';
 
-        this._logFunction = this._buildLogFunction(console.log);
+        this._logFunction = this._buildLogFunction(
+            sudooDefaultLogFunction,
+        );
     }
 
     public get length(): number {
