@@ -5,6 +5,7 @@ dev := typescript/tsconfig.dev.json
 # NPX functions
 tsc := node_modules/.bin/tsc
 ts_node := node_modules/.bin/ts-node
+nyc := node_modules/.bin/nyc
 mocha := node_modules/.bin/mocha
 eslint := node_modules/.bin/eslint
 
@@ -30,7 +31,7 @@ tests:
 cov:
 	@echo "[INFO] Testing with Nyc and Mocha"
 	@NODE_ENV=test \
-	nyc $(mocha) --config test/.mocharc.json
+	$(nyc) $(mocha) --config test/.mocharc.json
 
 lint:
 	@echo "[INFO] Linting"
