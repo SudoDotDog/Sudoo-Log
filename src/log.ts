@@ -93,14 +93,14 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.CRITICAL,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public scopedError(scope: string, ...contents: any[]): this {
+    public error(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.ERROR,
@@ -115,14 +115,14 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.ERROR,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public scopedWarning(scope: string, ...contents: any[]): this {
+    public warning(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.WARNING,
@@ -136,14 +136,14 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.WARNING,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public scopedInfo(scope: string, ...contents: any[]): this {
+    public info(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.INFO,
@@ -157,14 +157,14 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.INFO,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public scopedDebug(scope: string, ...contents: any[]): this {
+    public debug(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.DEBUG,
@@ -176,14 +176,14 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.DEBUG,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public scopedVerbose(scope: string, ...contents: any[]): this {
+    public verbose(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.VERBOSE,
@@ -194,20 +194,20 @@ export class SudooLog {
         const prettified: string = prettifyLogContents(
             LOG_LEVEL.VERBOSE,
             contents,
-            this._getConfig(scope),
+            this._config,
         );
 
         this._logFunction(prettified);
         return this;
     }
 
-    public reset(): this {
+    public resetCount(): this {
 
         this._count = 0;
         return this;
     }
 
-    protected _buildLogFunction(logFunction: LogFunction): LogFunction {
+    private _buildLogFunction(logFunction: LogFunction): LogFunction {
 
         return (...contents: string[]): void => {
 

@@ -32,15 +32,16 @@ const scopeQuote = (
     config: SudooLogConfig,
 ): string => {
 
-    if (config.scope === '') {
-        return `[${quote}]`;
-    }
+    const innerBracket: string = [
+        quote,
+        ...config.scopes,
+    ].join('/');
 
     if (config.capitalizeScope) {
-        return `[${config.scope.toUpperCase()}/${quote}]`;
+        return `[${innerBracket.toUpperCase()}]`;
     }
 
-    return `[${config.scope}/${quote}]`;
+    return `[${innerBracket}]`;
 };
 
 const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
