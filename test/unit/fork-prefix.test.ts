@@ -44,4 +44,25 @@ describe("Given {SudooLog} Class - Fork Prefix", (): void => {
 
         expect(temps.logs[0].endsWith("prefix test")).toBeTruthy();
     });
+
+    it("should be able to fork prefix with showtime formatter", (): void => {
+
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: false,
+            showTime: true,
+            dateFormatter: (): string => {
+                return "formatted";
+            },
+        });
+
+        const forked: SudooLog = agent.fork({
+            prefixes: ["prefix"],
+        });
+
+        forked.info("test");
+
+        expect(temps.logs[0]).toEqual("formatted [INFO] prefix test");
+    });
 });

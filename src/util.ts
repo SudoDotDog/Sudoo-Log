@@ -30,6 +30,7 @@ export const buildLogConfig = (
         scopes: [],
         prefixes: [],
         logFunction: sudooDefaultLogFunction,
+        dateFormatter: appropriateDateStringWithTime,
         tty: typeof config.tty === "boolean" ? config.tty : isTTY(),
     };
 

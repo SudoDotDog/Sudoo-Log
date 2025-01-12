@@ -17,6 +17,7 @@ export type SudooLogConfig = {
     readonly prefixes: string[];
 
     readonly logFunction: LogFunction;
+    readonly dateFormatter: (date: Date) => string;
 
     readonly tty: boolean;
 };

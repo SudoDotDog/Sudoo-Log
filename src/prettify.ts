@@ -98,7 +98,7 @@ const mergeContent = (
     if (config.showTime) {
 
         const date: Date = new Date();
-        const prettifiedDate: string = appropriateDateStringWithTime(date);
+        const prettifiedDate: string = config.dateFormatter(date);
 
         contentComponents.push(prettifiedDate);
     }
