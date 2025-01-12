@@ -4,13 +4,10 @@
  * @description Log
  */
 
-import { LOG_LEVEL, LevelDeterminer, LogFunction, PrettifyConfig, SudooLogConfig, buildLogConfig } from "./declare";
-import { sudooDefaultLogFunction } from "./log-function";
+import { LOG_LEVEL, LevelDeterminer, LogFunction, SudooLogConfig, buildLogConfig } from "./declare";
 import { prettifyLogContents } from './prettify';
 
 export class SudooLog {
-
-    private static _instance: SudooLog | undefined;
 
     public static create(
         level: LevelDeterminer,
@@ -29,9 +26,6 @@ export class SudooLog {
     private readonly _level: LOG_LEVEL;
     private readonly _config: SudooLogConfig;
 
-    private readonly _scope: string[];
-    private readonly _prefixes: string[];
-
     private readonly _logFunction: LogFunction;
 
     private _count: number;
@@ -44,13 +38,10 @@ export class SudooLog {
         this._level = level;
         this._config = config;
 
-        this._scope = [];
-        this._prefixes = [];
-
         this._count = 0;
 
         this._logFunction = this._buildLogFunction(
-            sudooDefaultLogFunction,
+            config.logFunction,
         );
     }
 
@@ -61,60 +52,31 @@ export class SudooLog {
         return this._level;
     }
 
-    public extend(scope: string): SudooLog {
+    public forkScope(scope: string): SudooLog {
 
-        const instance: SudooLog = this.clone();
-        instance._scope = [
-            ...this._scope,
-            scope,
-        ];
-
-        return instance;
+        return SudooLog.create(this._level, {
+            ...this._config,
+            scopes: [
+                ...this._config.scopes,
+                scope,
+            ],
+        });
     }
 
-    public setLevel(level: LOG_LEVEL): this {
+    public forkLevel(level: LOG_LEVEL): SudooLog {
 
-        this._level = level;
-        return this;
+        return SudooLog.create(level, this._config);
     }
 
-    public setLogFunction(logFunction: LogFunction): this {
+    public forkLogFunction(logFunction: LogFunction): SudooLog {
 
-        this._logFunction = this._buildLogFunction(logFunction);
-        return this;
+        return SudooLog.create(this._level, {
+            ...this._config,
+            logFunction,
+        });
     }
 
-    public critical(...contents: any[]): this {
-
-        return this.scopedCritical(this._scope, ...contents);
-    }
-
-    public error(...contents: any[]): this {
-
-        return this.scopedError(this._scope, ...contents);
-    }
-
-    public warning(...contents: any[]): this {
-
-        return this.scopedWarning(this._scope, ...contents);
-    }
-
-    public info(...contents: any[]): this {
-
-        return this.scopedInfo(this._scope, ...contents);
-    }
-
-    public debug(...contents: any[]): this {
-
-        return this.scopedDebug(this._scope, ...contents);
-    }
-
-    public verbose(...contents: any[]): this {
-
-        return this.scopedVerbose(this._scope, ...contents);
-    }
-
-    public scopedCritical(scope: string, ...contents: any[]): this {
+    public critical(scope: string, ...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.CRITICAL,

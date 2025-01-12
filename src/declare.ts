@@ -4,6 +4,7 @@
  * @description Declare
  */
 
+import { sudooDefaultLogFunction } from "./log-function";
 import { isTTY } from "./util";
 
 export type LevelDeterminer = LOG_LEVEL | (() => LOG_LEVEL);
@@ -15,17 +16,25 @@ export type SudooLogConfig = {
     readonly separator: string;
     readonly capitalizeScope: boolean;
 
+    readonly scopes: string[];
+    readonly prefixes: string[];
+
+    readonly logFunction: LogFunction;
+
     readonly tty: boolean;
-}
+};
 
 export const buildLogConfig = (config: Partial<SudooLogConfig>): SudooLogConfig => {
 
     const defaultConfig: SudooLogConfig = {
 
         showTime: false,
-        separator: ', ',
+        separator: ", ",
         capitalizeScope: true,
-        tty: typeof config.tty === 'boolean' ? config.tty : isTTY(),
+        scopes: [],
+        prefixes: [],
+        logFunction: sudooDefaultLogFunction,
+        tty: typeof config.tty === "boolean" ? config.tty : isTTY(),
     };
 
     return {
