@@ -5,7 +5,6 @@
  * @package Unit Test
  */
 
-import { expect } from 'chai';
 import { LOG_LEVEL, SudooLog } from '../../src';
 import { createSimpleMockLogFunction, SimpleMockLogFunction } from '../mock/log';
 
@@ -14,7 +13,7 @@ describe('Given {SudooLog} Class', (): void => {
     it('should be able to create log should give a empty log agent', (): void => {
 
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
-        expect(agent).to.be.lengthOf(0);
+        expect(agent).toHaveLength(0);
     });
 
     it('change log function should use new function instead', (): void => {
@@ -24,8 +23,8 @@ describe('Given {SudooLog} Class', (): void => {
 
         agent.setLogFunction(temps.func);
         agent.error('test');
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs).to.be.lengthOf(1);
+        expect(agent).toHaveLength(1);
+        expect(temps.logs).toHaveLength(1);
     });
 
     it('in all mode, all logs should be printed', (): void => {
@@ -37,8 +36,8 @@ describe('Given {SudooLog} Class', (): void => {
         agent.error('test')
             .info('test')
             .warning('test');
-        expect(agent).to.be.lengthOf(3);
-        expect(temps.logs).to.be.lengthOf(3);
+        expect(agent).toHaveLength(3);
+        expect(temps.logs).toHaveLength(3);
     });
 
     it('in debug mode, debug should be printed', (): void => {
@@ -52,8 +51,8 @@ describe('Given {SudooLog} Class', (): void => {
             .warning('test')
             .debug('test');
 
-        expect(agent).to.be.lengthOf(4);
-        expect(temps.logs).to.be.lengthOf(4);
+        expect(agent).toHaveLength(4);
+        expect(temps.logs).toHaveLength(4);
     });
 
     it('in info mode, without debug should be printed', (): void => {
@@ -67,8 +66,8 @@ describe('Given {SudooLog} Class', (): void => {
             .warning('test')
             .debug('test');
 
-        expect(agent).to.be.lengthOf(3);
-        expect(temps.logs).to.be.lengthOf(3);
+        expect(agent).toHaveLength(3);
+        expect(temps.logs).toHaveLength(3);
     });
 
     it('in warning mode, only warning and error should be printed out', (): void => {
@@ -82,8 +81,8 @@ describe('Given {SudooLog} Class', (): void => {
             .warning('test')
             .debug('test');
 
-        expect(agent).to.be.lengthOf(2);
-        expect(temps.logs).to.be.lengthOf(2);
+        expect(agent).toHaveLength(2);
+        expect(temps.logs).toHaveLength(2);
     });
 
     it('in error mode, only error should be printed out', (): void => {
@@ -95,8 +94,8 @@ describe('Given {SudooLog} Class', (): void => {
         agent.error('test')
             .info('test')
             .warning('test');
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs).to.be.lengthOf(1);
+        expect(agent).toHaveLength(1);
+        expect(temps.logs).toHaveLength(1);
     });
 
     it('should be able to log information - tty', (): void => {
@@ -108,9 +107,9 @@ describe('Given {SudooLog} Class', (): void => {
         agent.setLogFunction(temps.func);
         agent.info('test');
 
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs[0]).to.be.include('[INFO]');
-        expect(temps.logs[0]).to.be.not.equal('[INFO] test');
+        expect(agent).toHaveLength(1);
+        expect(temps.logs[0]).toContain('[INFO]');
+        expect(temps.logs[0]).not.toEqual('[INFO] test');
     });
 
     it('should be able to log scoped information - tty', (): void => {
@@ -123,9 +122,9 @@ describe('Given {SudooLog} Class', (): void => {
         agent.setScope('scope');
         agent.info('test');
 
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs[0]).to.be.include('[SCOPE/INFO]');
-        expect(temps.logs[0]).to.be.not.equal('[SCOPE/INFO] test');
+        expect(agent).toHaveLength(1);
+        expect(temps.logs[0]).toContain('[SCOPE/INFO]');
+        expect(temps.logs[0]).not.toEqual('[SCOPE/INFO] test');
     });
 
     it('should be able to log information - not tty', (): void => {
@@ -137,8 +136,8 @@ describe('Given {SudooLog} Class', (): void => {
         agent.setLogFunction(temps.func);
         agent.info('test');
 
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs[0]).to.be.equal('[INFO] test');
+        expect(agent).toHaveLength(1);
+        expect(temps.logs[0]).toEqual('[INFO] test');
     });
 
     it('should be able to log scoped information - not tty', (): void => {
@@ -151,7 +150,7 @@ describe('Given {SudooLog} Class', (): void => {
         agent.setScope('scope');
         agent.info('test');
 
-        expect(agent).to.be.lengthOf(1);
-        expect(temps.logs[0]).to.be.equal('[SCOPE/INFO] test');
+        expect(agent).toHaveLength(1);
+        expect(temps.logs[0]).toEqual('[SCOPE/INFO] test');
     });
 });
