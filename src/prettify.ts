@@ -5,7 +5,6 @@
  */
 
 import { COLORS, LOG_LEVEL, SudooLogConfig } from "./declare";
-import { appropriateDateStringWithTime } from "./util";
 
 const wrapContent = (colors: COLORS[], content: string) => {
 
