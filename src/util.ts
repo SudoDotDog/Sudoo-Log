@@ -5,6 +5,8 @@
  */
 
 import { TIME_CHANGE } from "@sudoo/magic";
+import { SudooLogConfig } from "./declare";
+import { sudooDefaultLogFunction } from "./log-function";
 
 export const isTTY = (): boolean => {
 
@@ -14,6 +16,28 @@ export const isTTY = (): boolean => {
     }
 
     return false;
+};
+
+export const buildLogConfig = (
+    config: Partial<SudooLogConfig>,
+): SudooLogConfig => {
+
+    const defaultConfig: SudooLogConfig = {
+
+        showTime: false,
+        separator: ", ",
+        capitalizeScope: true,
+        scopes: [],
+        prefixes: [],
+        logFunction: sudooDefaultLogFunction,
+        tty: typeof config.tty === "boolean" ? config.tty : isTTY(),
+    };
+
+    return {
+
+        ...defaultConfig,
+        ...config,
+    };
 };
 
 const padZero = (value: number, digits: number): string => {

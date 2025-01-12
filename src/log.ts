@@ -4,8 +4,9 @@
  * @description Log
  */
 
-import { LOG_LEVEL, LevelDeterminer, LogFunction, SudooLogConfig, buildLogConfig } from "./declare";
+import { LOG_LEVEL, LevelDeterminer, LogFunction, SudooLogConfig } from "./declare";
 import { prettifyLogContents } from './prettify';
+import { buildLogConfig } from "./util";
 
 export class SudooLog {
 

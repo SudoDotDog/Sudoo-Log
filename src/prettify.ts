@@ -4,7 +4,7 @@
  * @description Prettify
  */
 
-import { COLORS, LOG_LEVEL, PrettifyConfig } from './declare';
+import { COLORS, LOG_LEVEL, SudooLogConfig } from './declare';
 import { appropriateDateStringWithTime } from './util';
 
 const wrapContent = (colors: COLORS[], content: string) => {
@@ -27,7 +27,10 @@ const getQuote = (mode: LOG_LEVEL): string => {
     return 'UNKNOWN';
 };
 
-const scopeQuote = (quote: string, config: PrettifyConfig): string => {
+const scopeQuote = (
+    quote: string,
+    config: SudooLogConfig,
+): string => {
 
     if (config.scope === '') {
         return `[${quote}]`;
@@ -83,7 +86,11 @@ const getPrettyColor = (mode: LOG_LEVEL): [COLORS[], COLORS | null] => {
     ];
 };
 
-const mergeContent = (quote: string, str: string, config: PrettifyConfig): string => {
+const mergeContent = (
+    quote: string,
+    str: string,
+    config: SudooLogConfig,
+): string => {
 
     if (config.showTime) {
 
@@ -150,7 +157,7 @@ const stringifyContents = (content: any): string => {
 
 const concatContents = (
     contents: any[],
-    config: PrettifyConfig,
+    config: SudooLogConfig,
 ): string => {
 
     return contents
@@ -161,14 +168,14 @@ const concatContents = (
 export const prettifyLogContents = (
     mode: LOG_LEVEL,
     contents: any[],
-    config: PrettifyConfig,
+    config: SudooLogConfig,
 ): string => {
 
     const contentString: string = concatContents(contents, config);
     const quote: string = getQuote(mode);
     const quoteText: string = scopeQuote(quote, config);
 
-    if (isTTY(config)) {
+    if (config.tty) {
 
         const [back, front]: [COLORS[], COLORS | null] = getPrettyColor(mode);
         const wrappedBack: string = wrapContent(back, quoteText);
