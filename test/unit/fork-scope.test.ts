@@ -15,6 +15,7 @@ describe("Given {SudooLog} Class - Fork Scope", (): void => {
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
         const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
             logFunction: temps.func,
+            tty: false,
         });
         const forked: SudooLog = agent.forkScope("scope");
 

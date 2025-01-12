@@ -100,6 +100,7 @@ describe("Given {SudooLog} Class", (): void => {
         agent.error("test")
             .info("test")
             .warning("test");
+
         expect(agent).toHaveLength(1);
         expect(temps.logs).toHaveLength(1);
     });
