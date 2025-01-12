@@ -13,15 +13,16 @@ export class SudooLog {
     public static create(
         level: LevelDeterminer,
         config: Partial<SudooLogConfig> = {},
+        parent?: SudooLog,
     ): SudooLog {
 
         const fixedConfig: SudooLogConfig = buildLogConfig(config);
 
         if (typeof level === "function") {
-            return new SudooLog(level(), fixedConfig);
+            return new SudooLog(level(), fixedConfig, parent);
         }
 
-        return new SudooLog(level, fixedConfig);
+        return new SudooLog(level, fixedConfig, parent);
     }
 
     private readonly _level: LOG_LEVEL;
@@ -31,9 +32,12 @@ export class SudooLog {
 
     private _count: number;
 
+    private readonly _parent?: SudooLog;
+
     private constructor(
         level: LOG_LEVEL,
         config: SudooLogConfig,
+        parent?: SudooLog,
     ) {
 
         this._level = level;
@@ -44,6 +48,8 @@ export class SudooLog {
         this._logFunction = this._buildLogFunction(
             config.logFunction,
         );
+
+        this._parent = parent;
     }
 
     public get length(): number {
@@ -53,10 +59,17 @@ export class SudooLog {
         return this._level;
     }
 
-    public forkScope(scope: string): SudooLog {
+    public fork(config: Partial<SudooLogConfig> = {}): SudooLog {
 
         return SudooLog.create(this._level, {
             ...this._config,
+            ...config,
+        }, this);
+    }
+
+    public forkScope(scope: string): SudooLog {
+
+        return this.fork({
             scopes: [
                 ...this._config.scopes,
                 scope,
@@ -64,20 +77,14 @@ export class SudooLog {
         });
     }
 
-    public forkLevel(level: LOG_LEVEL): SudooLog {
-
-        return SudooLog.create(level, this._config);
-    }
-
     public forkLogFunction(logFunction: LogFunction): SudooLog {
 
-        return SudooLog.create(this._level, {
-            ...this._config,
+        return this.fork({
             logFunction,
         });
     }
 
-    public critical(scope: string, ...contents: any[]): this {
+    public critical(...contents: any[]): this {
 
         if (!this._expect([
             LOG_LEVEL.CRITICAL,
