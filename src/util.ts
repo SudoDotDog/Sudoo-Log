@@ -46,7 +46,7 @@ const padZero = (value: number, digits: number): string => {
     const difference: number = digits - parsed.length;
     if (difference > 0) {
 
-        return '0'.repeat(difference) + parsed;
+        return "0".repeat(difference) + parsed;
     }
 
     return parsed;
@@ -76,8 +76,8 @@ export const appropriateDateStringWithTime = (date: Date): string => {
     const parsedArea: string = Math.abs(area).toString();
 
     const areaStr: string = isPositive
-        ? '+' + parsedArea
-        : '-' + parsedArea;
+        ? "+" + parsedArea
+        : "-" + parsedArea;
 
     return `${parsedYear}-${parsedMonth}-${parsedDay} ${parsedHour}:${parsedMinute}:${parsedSecond} (UTC${areaStr})`;
 };

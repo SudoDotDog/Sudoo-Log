@@ -4,27 +4,27 @@
  * @description Prettify
  */
 
-import { COLORS, LOG_LEVEL, SudooLogConfig } from './declare';
-import { appropriateDateStringWithTime } from './util';
+import { COLORS, LOG_LEVEL, SudooLogConfig } from "./declare";
+import { appropriateDateStringWithTime } from "./util";
 
 const wrapContent = (colors: COLORS[], content: string) => {
 
-    return `${colors.join('')}${content}${COLORS.RESET}`;
+    return `${colors.join("")}${content}${COLORS.RESET}`;
 };
 
 const getQuote = (mode: LOG_LEVEL): string => {
 
     switch (mode) {
 
-        case LOG_LEVEL.CRITICAL: return 'CRITICAL';
-        case LOG_LEVEL.ERROR: return 'ERROR';
-        case LOG_LEVEL.WARNING: return 'WARNING';
-        case LOG_LEVEL.INFO: return 'INFO';
-        case LOG_LEVEL.DEBUG: return 'DEBUG';
-        case LOG_LEVEL.VERBOSE: return 'VERBOSE';
+        case LOG_LEVEL.CRITICAL: return "CRITICAL";
+        case LOG_LEVEL.ERROR: return "ERROR";
+        case LOG_LEVEL.WARNING: return "WARNING";
+        case LOG_LEVEL.INFO: return "INFO";
+        case LOG_LEVEL.DEBUG: return "DEBUG";
+        case LOG_LEVEL.VERBOSE: return "VERBOSE";
     }
 
-    return 'UNKNOWN';
+    return "UNKNOWN";
 };
 
 const scopeQuote = (
@@ -35,7 +35,7 @@ const scopeQuote = (
     const innerBracket: string = [
         quote,
         ...config.scopes,
-    ].join('/');
+    ].join("/");
 
     if (config.capitalizeScope) {
         return `[${innerBracket.toUpperCase()}]`;
@@ -106,23 +106,23 @@ const mergeContent = (
 
 const stringifyContents = (content: any): string => {
 
-    if (typeof content === 'undefined') {
-        return '(undefined)';
+    if (typeof content === "undefined") {
+        return "(undefined)";
     }
 
     if (content === null) {
-        return '(null)';
+        return "(null)";
     }
 
-    if (typeof content === 'string') {
+    if (typeof content === "string") {
         return content;
     }
 
-    if (typeof content === 'number') {
+    if (typeof content === "number") {
         return content.toString();
     }
 
-    if (typeof content === 'bigint') {
+    if (typeof content === "bigint") {
         return `${content.toString()}n`;
     }
 
@@ -130,7 +130,7 @@ const stringifyContents = (content: any): string => {
 
         const joinedList: string = content
             .map((element: any) => stringifyContents(element))
-            .join(', ');
+            .join(", ");
 
         return `[${joinedList}]`;
     }
@@ -140,16 +140,16 @@ const stringifyContents = (content: any): string => {
         return dateAttempt.toISOString();
     }
 
-    if (typeof content === 'object') {
+    if (typeof content === "object") {
 
         const joinedObject: string = Object.entries(content)
             .map((entry: [any, any]) => `${entry[0]}: ${stringifyContents(entry[1])}`)
-            .join(', ');
+            .join(", ");
 
         return `{${joinedObject}}`;
     }
 
-    if (typeof content.toString === 'function') {
+    if (typeof content.toString === "function") {
         return content.toString();
     }
 

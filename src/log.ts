@@ -5,7 +5,7 @@
  */
 
 import { LOG_LEVEL, LevelDeterminer, LogFunction, SudooLogConfig } from "./declare";
-import { prettifyLogContents } from './prettify';
+import { prettifyLogContents } from "./prettify";
 import { buildLogConfig } from "./util";
 
 export class SudooLog {
@@ -17,7 +17,7 @@ export class SudooLog {
 
         const fixedConfig: SudooLogConfig = buildLogConfig(config);
 
-        if (typeof level === 'function') {
+        if (typeof level === "function") {
             return new SudooLog(level(), fixedConfig);
         }
 
