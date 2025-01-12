@@ -4,18 +4,39 @@
  * @description Declare
  */
 
+import { isTTY } from "./util";
+
 export type LevelDeterminer = LOG_LEVEL | (() => LOG_LEVEL);
 export type LogFunction = (...content: any[]) => void;
 
-export type PrettifyConfig = {
+export type SudooLogConfig = {
 
     readonly showTime: boolean;
     readonly separator: string;
     readonly capitalizeScope: boolean;
 
-    readonly scope: string;
+    readonly tty: boolean;
+}
 
-    readonly tty?: boolean;
+export const buildLogConfig = (config: Partial<SudooLogConfig>): SudooLogConfig => {
+
+    const defaultConfig: SudooLogConfig = {
+
+        showTime: false,
+        separator: ', ',
+        capitalizeScope: true,
+        tty: typeof config.tty === 'boolean' ? config.tty : isTTY(),
+    };
+
+    return {
+
+        ...defaultConfig,
+        ...config,
+    };
+};
+
+export type PrettifyConfig = {
+
 };
 
 export enum LOG_LEVEL {

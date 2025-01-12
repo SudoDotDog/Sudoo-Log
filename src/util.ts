@@ -6,6 +6,16 @@
 
 import { TIME_CHANGE } from "@sudoo/magic";
 
+export const isTTY = (): boolean => {
+
+    if (Boolean(process) && Boolean(process.stdout)) {
+
+        return Boolean(process.stdout.isTTY);
+    }
+
+    return false;
+};
+
 const padZero = (value: number, digits: number): string => {
 
     const parsed: string = value.toString();

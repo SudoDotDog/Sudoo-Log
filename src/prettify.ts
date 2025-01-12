@@ -7,20 +7,6 @@
 import { COLORS, LOG_LEVEL, PrettifyConfig } from './declare';
 import { appropriateDateStringWithTime } from './util';
 
-const isTTY = (config: PrettifyConfig): boolean => {
-
-    if (typeof config.tty === 'boolean') {
-        return config.tty;
-    }
-
-    if (Boolean(process) && Boolean(process.stdout)) {
-
-        return Boolean(process.stdout.isTTY);
-    }
-
-    return false;
-};
-
 const wrapContent = (colors: COLORS[], content: string) => {
 
     return `${colors.join('')}${content}${COLORS.RESET}`;
