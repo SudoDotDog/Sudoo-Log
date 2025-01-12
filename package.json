@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint",
+    "lint": "eslint src test",
     "clean": "rm -rf app",
     "build": "tsc --project typescript/tsconfig.build.json",
     "license": "sdb license",
