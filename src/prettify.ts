@@ -93,15 +93,21 @@ const mergeContent = (
     config: SudooLogConfig,
 ): string => {
 
+    const contentComponents: string[] = [];
+
     if (config.showTime) {
 
         const date: Date = new Date();
         const prettifiedDate: string = appropriateDateStringWithTime(date);
 
-        return `${quote} ${prettifiedDate} ${str}`;
+        contentComponents.push(prettifiedDate);
     }
 
-    return `${quote} ${str}`;
+    contentComponents.push(quote);
+    contentComponents.push(...config.prefixes);
+    contentComponents.push(str);
+
+    return contentComponents.join(" ");
 };
 
 const stringifyContents = (content: any): string => {
