@@ -18,10 +18,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('change log function should use new function instead', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test');
         expect(agent).toHaveLength(1);
         expect(temps.logs).toHaveLength(1);
@@ -29,10 +30,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('in all mode, all logs should be printed', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test');
@@ -42,10 +44,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('in debug mode, debug should be printed', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.DEBUG);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.DEBUG, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -57,10 +60,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('in info mode, without debug should be printed', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.INFO);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.INFO, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -72,10 +76,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('in warning mode, only warning and error should be printed out', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.WARNING);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.WARNING, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test')
@@ -87,10 +92,11 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('in error mode, only error should be printed out', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ERROR);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ERROR, {
+            logFunction: temps.func,
+        });
 
-        agent.setLogFunction(temps.func);
         agent.error('test')
             .info('test')
             .warning('test');
@@ -100,11 +106,12 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('should be able to log information - tty', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: true,
+        });
 
-        agent.setTTY(true);
-        agent.setLogFunction(temps.func);
         agent.info('test');
 
         expect(agent).toHaveLength(1);
@@ -114,12 +121,13 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('should be able to log scoped information - tty', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: true,
+            scopes: ['scope'],
+        });
 
-        agent.setTTY(true);
-        agent.setLogFunction(temps.func);
-        agent.setScope('scope');
         agent.info('test');
 
         expect(agent).toHaveLength(1);
@@ -129,11 +137,12 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('should be able to log information - not tty', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: false,
+        });
 
-        agent.setTTY(false);
-        agent.setLogFunction(temps.func);
         agent.info('test');
 
         expect(agent).toHaveLength(1);
@@ -142,12 +151,13 @@ describe('Given {SudooLog} Class', (): void => {
 
     it('should be able to log scoped information - not tty', (): void => {
 
-        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL);
         const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: false,
+            scopes: ['scope'],
+        });
 
-        agent.setTTY(false);
-        agent.setLogFunction(temps.func);
-        agent.setScope('scope');
         agent.info('test');
 
         expect(agent).toHaveLength(1);
