@@ -208,17 +208,20 @@ export class SudooLog {
         return this;
     }
 
-    public resetCount(): this {
+    protected _increaseCount(): void {
 
-        this._count = 0;
-        return this;
+        this._count++;
+
+        if (this._parent) {
+            this._parent._increaseCount();
+        }
     }
 
     private _buildLogFunction(logFunction: LogFunction): LogFunction {
 
         return (...contents: string[]): void => {
 
-            this._count++;
+            this._increaseCount();
             logFunction(...contents);
         };
     }
