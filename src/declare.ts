@@ -5,7 +5,7 @@
  */
 
 export type LevelDeterminer = LOG_LEVEL | (() => LOG_LEVEL);
-export type LogFunction = (...content: any[]) => void;
+export type LogFunction = (level: LOG_LEVEL, ...content: any[]) => void;
 
 export type SudooLogConfig = {
 

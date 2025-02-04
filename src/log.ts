@@ -103,7 +103,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.CRITICAL, prettified);
         return this;
     }
 
@@ -125,7 +125,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.ERROR, prettified);
         return this;
     }
 
@@ -146,7 +146,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.WARNING, prettified);
         return this;
     }
 
@@ -167,7 +167,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.INFO, prettified);
         return this;
     }
 
@@ -186,7 +186,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.DEBUG, prettified);
         return this;
     }
 
@@ -204,7 +204,7 @@ export class SudooLog {
             this._config,
         );
 
-        this._logFunction(prettified);
+        this._logFunction(LOG_LEVEL.VERBOSE, prettified);
         return this;
     }
 
@@ -219,10 +219,10 @@ export class SudooLog {
 
     private _buildLogFunction(logFunction: LogFunction): LogFunction {
 
-        return (...contents: string[]): void => {
+        return (level: LOG_LEVEL, ...contents: string[]): void => {
 
             this._increaseCount();
-            logFunction(...contents);
+            logFunction(level, ...contents);
         };
     }
 

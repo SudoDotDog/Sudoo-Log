@@ -5,7 +5,7 @@
  * @package Unit Test
  */
 
-import { LogFunction } from "../../src";
+import { LOG_LEVEL, LogFunction } from "../../src";
 
 export type SimpleMockLogFunction = {
 
@@ -18,7 +18,7 @@ export const createSimpleMockLogFunction = (): SimpleMockLogFunction => {
     const logs: string[] = [];
     return {
 
-        func: (...content: string[]): void => {
+        func: (_level: LOG_LEVEL, ...content: string[]): void => {
 
             logs.push(...content);
         },
