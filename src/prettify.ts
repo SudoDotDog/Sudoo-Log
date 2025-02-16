@@ -140,9 +140,8 @@ const stringifyContents = (content: any): string => {
         return `[${joinedList}]`;
     }
 
-    const dateAttempt: Date = new Date(content);
-    if (!isNaN(dateAttempt.getTime())) {
-        return dateAttempt.toISOString();
+    if (content instanceof Date) {
+        return content.toISOString();
     }
 
     if (typeof content === "object") {
