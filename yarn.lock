@@ -1988,7 +1988,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.26.0"
     "@sudoo/magic": "npm:^1.9.0"
     "@types/jest": "npm:^29.5.14"
-    "@types/node": "npm:^22.13.7"
+    "@types/node": "npm:^22.13.9"
     "@typescript-eslint/eslint-plugin": "npm:^8.24.0"
     "@typescript-eslint/parser": "npm:^8.25.0"
     babel-jest: "npm:^29.7.0"
@@ -2142,12 +2142,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.13.7":
-  version: 22.13.7
-  resolution: "@types/node@npm:22.13.7"
+"@types/node@npm:^22.13.9":
+  version: 22.13.9
+  resolution: "@types/node@npm:22.13.9"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10c0/cd44f2a77369def4d21a917c1a4b518777f9488495fe1fd26284c4f19cc2c01e2f7e4030bf92ec14b613fa3d314e52b484b711f4c5a14fa6a01a30adf2c878db
+  checksum: 10c0/eb6acd04169a076631dcaab712128d492cd17a1b3f10daae4a377f3d439c860c3cd3e32f4ef221671f56183b976ac7c4089f4193457314a88675ead4663438a4
   languageName: node
   linkType: hard
 
