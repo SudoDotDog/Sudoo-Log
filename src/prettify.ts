@@ -33,9 +33,9 @@ const getEmojiQuote = (mode: LOG_LEVEL): string => {
         case LOG_LEVEL.CRITICAL: return "❗";
         case LOG_LEVEL.ERROR: return "🔴";
         case LOG_LEVEL.WARNING: return "🟡";
-        case LOG_LEVEL.INFO: return "ℹ️";
-        case LOG_LEVEL.DEBUG: return "🔷";
-        case LOG_LEVEL.VERBOSE: return "➕";
+        case LOG_LEVEL.INFO: return "🔷";
+        case LOG_LEVEL.DEBUG: return "🔸";
+        case LOG_LEVEL.VERBOSE: return "💠";
     }
 
     return "❓";

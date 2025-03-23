@@ -75,7 +75,6 @@ export class SudooLog {
 
         return this.fork({
             scopes: [
-                ...this._config.scopes,
                 scope,
             ],
         });
