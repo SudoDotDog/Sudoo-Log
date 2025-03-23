@@ -26,6 +26,21 @@ const getQuote = (mode: LOG_LEVEL): string => {
     return "UNKNOWN";
 };
 
+const getEmojiQuote = (mode: LOG_LEVEL): string => {
+
+    switch (mode) {
+
+        case LOG_LEVEL.CRITICAL: return "❗";
+        case LOG_LEVEL.ERROR: return "🔴";
+        case LOG_LEVEL.WARNING: return "🟡";
+        case LOG_LEVEL.INFO: return "ℹ️";
+        case LOG_LEVEL.DEBUG: return "🔷";
+        case LOG_LEVEL.VERBOSE: return "➕";
+    }
+
+    return "❓";
+};
+
 const scopeQuote = (
     quote: string,
     config: SudooLogConfig,
@@ -51,21 +66,11 @@ const scopeQuote = (
 
         const innerBracket: string = config.scopes.join("/");
 
-        if (config.levelType === LOG_LEVEL_TYPE.EMOJI_PREFIX) {
-
-            if (config.capitalizeScope) {
-                return `[${innerBracket.toUpperCase()}]`;
-            }
-
-            return `[${innerBracket}]`;
-        } else if (config.levelType === LOG_LEVEL_TYPE.PREFIX) {
-
-            if (config.capitalizeScope) {
-                return `[${innerBracket.toUpperCase()}]`;
-            }
-
-            return `[${innerBracket}]`;
+        if (config.capitalizeScope) {
+            return `${quote.toUpperCase()} [${innerBracket.toUpperCase()}]`;
         }
+
+        return `${quote} [${innerBracket}]`;
     }
 
     const innerBracket: string = config.scopes.join("/");
@@ -211,7 +216,9 @@ export const prettifyLogContents = (
 ): string => {
 
     const contentString: string = concatContents(contents, config);
-    const quote: string = getQuote(mode);
+    const quote: string = config.levelType === LOG_LEVEL_TYPE.EMOJI_PREFIX
+        ? getEmojiQuote(mode)
+        : getQuote(mode);
     const quoteText: string = scopeQuote(quote, config);
 
     if (config.tty) {
