@@ -49,21 +49,26 @@ const scopeQuote = (
         || config.levelType === LOG_LEVEL_TYPE.PREFIX
     ) {
 
-        const innerBracket: string = [
-            quote,
-            ...config.scopes,
-        ].join("/");
+        const innerBracket: string = config.scopes.join("/");
 
-        if (config.capitalizeScope) {
-            return `[${innerBracket.toUpperCase()}]`;
+        if (config.levelType === LOG_LEVEL_TYPE.EMOJI_PREFIX) {
+
+            if (config.capitalizeScope) {
+                return `[${innerBracket.toUpperCase()}]`;
+            }
+
+            return `[${innerBracket}]`;
+        } else if (config.levelType === LOG_LEVEL_TYPE.PREFIX) {
+
+            if (config.capitalizeScope) {
+                return `[${innerBracket.toUpperCase()}]`;
+            }
+
+            return `[${innerBracket}]`;
         }
-
-        return `[${innerBracket}]`;
     }
 
-    const innerBracket: string = [
-        ...config.scopes,
-    ].join("/");
+    const innerBracket: string = config.scopes.join("/");
 
     if (config.capitalizeScope) {
         return `[${innerBracket.toUpperCase()}]`;
