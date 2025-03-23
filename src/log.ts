@@ -64,6 +64,10 @@ export class SudooLog {
         return SudooLog.create(this._level, {
             ...this._config,
             ...config,
+            scopes: [
+                ...this._config.scopes,
+                ...(config.scopes || []),
+            ],
         }, this);
     }
 

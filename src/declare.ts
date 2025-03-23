@@ -13,6 +13,7 @@ export type SudooLogConfig = {
     readonly separator: string;
     readonly capitalizeScope: boolean;
 
+    readonly levelType: LOG_LEVEL_TYPE;
     readonly scopes: string[];
     readonly prefixes: string[];
 
@@ -21,6 +22,13 @@ export type SudooLogConfig = {
 
     readonly tty: boolean;
 };
+
+export enum LOG_LEVEL_TYPE {
+
+    SCOPE = "SCOPE",
+    PREFIX = "PREFIX",
+    EMOJI_PREFIX = "EMOJI_PREFIX",
+}
 
 export enum LOG_LEVEL {
 

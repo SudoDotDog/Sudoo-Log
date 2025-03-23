@@ -5,7 +5,7 @@
  */
 
 import { TIME_CHANGE } from "@sudoo/magic";
-import { SudooLogConfig } from "./declare";
+import { LOG_LEVEL_TYPE, SudooLogConfig } from "./declare";
 import { sudooDefaultLogFunction } from "./log-function";
 
 export const isTTY = (): boolean => {
@@ -27,6 +27,7 @@ export const buildLogConfig = (
         showTime: false,
         separator: ", ",
         capitalizeScope: true,
+        levelType: LOG_LEVEL_TYPE.SCOPE,
         scopes: [],
         prefixes: [],
         logFunction: sudooDefaultLogFunction,
