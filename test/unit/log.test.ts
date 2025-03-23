@@ -5,7 +5,7 @@
  * @package Unit Test
  */
 
-import { LOG_LEVEL, SudooLog } from "../../src";
+import { LOG_LEVEL, LOG_LEVEL_TYPE, SudooLog } from "../../src";
 import { SimpleMockLogFunction, createSimpleMockLogFunction } from "../mock/log";
 
 describe("Given {SudooLog} Class", (): void => {
@@ -163,5 +163,21 @@ describe("Given {SudooLog} Class", (): void => {
 
         expect(agent).toHaveLength(1);
         expect(temps.logs[0]).toEqual("[INFO/SCOPE] test");
+    });
+
+    it("should be able to log emoji prefix - not tty", (): void => {
+
+        const temps: SimpleMockLogFunction = createSimpleMockLogFunction();
+        const agent: SudooLog = SudooLog.create(LOG_LEVEL.ALL, {
+            logFunction: temps.func,
+            tty: false,
+            levelType: LOG_LEVEL_TYPE.EMOJI_PREFIX,
+            scopes: ["scope"],
+        });
+
+        agent.info("test");
+
+        expect(agent).toHaveLength(1);
+        expect(temps.logs[0]).toEqual("🔷 [SCOPE] test");
     });
 });
