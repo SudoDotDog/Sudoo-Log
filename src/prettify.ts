@@ -4,7 +4,7 @@
  * @description Prettify
  */
 
-import { COLORS, LOG_LEVEL, SudooLogConfig } from "./declare";
+import { COLORS, LOG_LEVEL, LOG_LEVEL_TYPE, SudooLogConfig } from "./declare";
 
 const wrapContent = (colors: COLORS[], content: string) => {
 
@@ -31,8 +31,37 @@ const scopeQuote = (
     config: SudooLogConfig,
 ): string => {
 
+    if (config.levelType === LOG_LEVEL_TYPE.SCOPE) {
+
+        const innerBracket: string = [
+            quote,
+            ...config.scopes,
+        ].join("/");
+
+        if (config.capitalizeScope) {
+            return `[${innerBracket.toUpperCase()}]`;
+        }
+
+        return `[${innerBracket}]`;
+    }
+
+    if (config.levelType === LOG_LEVEL_TYPE.EMOJI_PREFIX
+        || config.levelType === LOG_LEVEL_TYPE.PREFIX
+    ) {
+
+        const innerBracket: string = [
+            quote,
+            ...config.scopes,
+        ].join("/");
+
+        if (config.capitalizeScope) {
+            return `[${innerBracket.toUpperCase()}]`;
+        }
+
+        return `[${innerBracket}]`;
+    }
+
     const innerBracket: string = [
-        quote,
         ...config.scopes,
     ].join("/");
 
